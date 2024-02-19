@@ -33,6 +33,18 @@ class Record: # Клас для зберігання інформації про
                 self.phones.remove(ph)
 
     def edit_phone(self, old_phone, new_phone):
+        phone_exists = True
+        for p in self.phones:
+            if p.value == old_phone:
+                phone_exists = False
+                break
+
+        if phone_exists:
+            raise ValueError("Phone number to edit does not exist.")
+
+        if not new_phone.isdigit() or len(new_phone) != 10:
+            raise ValueError("New phone number must be a 10-digit number.")
+
         for ph in self.phones:
             if ph.value == old_phone:
                 ph.value = new_phone
@@ -82,7 +94,7 @@ for name, record in book.data.items():
 
 # Знаходження та редагування телефону для John
 john = book.find("John")
-john.edit_phone("1234567890", "1112223333")
+john.edit_phone("1234567890", "1112223330")
 
 print(john)  # Виведення: Contact name: John, phones: 1112223333; 5555555555
 
